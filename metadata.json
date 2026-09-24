@@ -1,0 +1,6 @@
+{
+  "name": "Fromagerie La Beya | أجبان البية",
+  "description": "Fromagerie artisanale de luxe - Omar Hdhili. أجبان تقليدية فاخرة وذوق رفيع مع خدمة الطلب المباشر.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

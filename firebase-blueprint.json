@@ -1,0 +1,18 @@
+{
+  "entities": {
+    "Order": {
+      "collection": "orders",
+      "fields": {
+        "customerName": { "type": "string", "required": true },
+        "phone": { "type": "string", "required": true },
+        "city": { "type": "string", "required": true },
+        "address": { "type": "string", "required": false },
+        "deliveryMethod": { "type": "string", "required": true },
+        "items": { "type": "array", "required": true },
+        "notes": { "type": "string", "required": false },
+        "status": { "type": "string", "required": true },
+        "createdAt": { "type": "string", "required": true }
+      }
+    }
+  }
+}

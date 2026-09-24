@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 64 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidOrder(data) {
+      return data.keys().hasAll(['customerName', 'phone', 'city', 'deliveryMethod', 'items', 'status', 'createdAt'])
+        && data.customerName is string && data.customerName.size() >= 2 && data.customerName.size() <= 100
+        && data.phone is string && data.phone.size() >= 6 && data.phone.size() <= 30
+        && data.city is string && data.city.size() >= 2 && data.city.size() <= 100
+        && data.deliveryMethod in ['delivery', 'pickup']
+        && data.items is list && data.items.size() > 0 && data.items.size() <= 25
+        && data.status in ['new', 'confirmed', 'preparing', 'delivered', 'cancelled']
+        && data.createdAt is string;
+    }
+
+    match /orders/{orderId} {
+      allow get, list: if true;
+      allow create: if isValidId(orderId) && isValidOrder(request.resource.data) && request.resource.data.status == 'new';
+      allow update: if isValidId(orderId) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'notes']);
+      allow delete: if isValidId(orderId);
+    }
+
+    match /test/connection {
+      allow read, write: if true;
+    }
+  }
+}
